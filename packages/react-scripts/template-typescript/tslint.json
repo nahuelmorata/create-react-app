@@ -1,0 +1,20 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended",
+        "tslint-react-hooks",
+        "tslint-react"
+    ],
+    "jsRules": {},
+    "rules": {
+        "react-hooks-nesting": "error",
+        "jsx-wrap-multiline": false,
+        "jsx-boolean-value": false,
+        "jsx-alignment": false,
+        "max-line-length": false,
+        "no-console": false,
+        "arrow-parens": false,
+        "object-literal-sort-keys": false
+    },
+    "rulesDirectory": []
+}
