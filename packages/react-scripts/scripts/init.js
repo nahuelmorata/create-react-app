@@ -276,7 +276,7 @@ module.exports = function(
   console.log('Happy hacking!');
   console.log();
   console.log('Install dependencies');
-  console.log('npm install tslint-react-hooks tslint-react tslint --save-dev')
+  console.log('npm install tslint-react-hooks tslint-react tslint @types/react-router-dom @types/socket.io-client --save-dev')
 };
 
 function isReactInstalled(appPackage) {
