@@ -1,2 +1,1 @@
-export const APIURL = "http://localhost";
-// export const APIURL = "";
+export const APIURL = process.env.REACT_APP_APIURL;
