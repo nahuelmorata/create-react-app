@@ -1,11 +1,15 @@
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, ChangeEvent } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { LoginServicio } from "../../../api/servicios";
-import { hacerLogin, Store } from "../../../contextGlobal";
+import { hacerLogin, Store, mostrarSidebar } from "../../../contextGlobal";
+import { History } from "history";
+
 
 const loginService = new LoginServicio();
 
-const Login = ({ history }) => {
+const Login = ({ historyRouter }) => {
+    const history = historyRouter as History;
+
     /**
      * States
      */
@@ -38,10 +42,14 @@ const Login = ({ history }) => {
      * Effects
      */
     useEffect(() => {
+        if (estado.mostrarSidebar) {
+            dispatch(mostrarSidebar(false));
+        }
+
         if (estado.token !== "") {
             history.push("/");
         }
-    }, [estado.token, history]);
+    }, [estado.token, history, estado.mostrarSidebar, dispatch]);
 
     return (
         <div className="container-fluid h-100 vista-login">

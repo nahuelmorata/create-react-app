@@ -1,26 +1,37 @@
 import React, { Dispatch, useReducer } from "react";
 
 const HACERLOGIN: string = "HACER_LOGIN";
+const MOSTRARSIDEBAR: string = "MOSTRAR_SIDEBAR";
 
-export interface IGlobal {
+export interface Global {
     token: string;
+    mostrarSidebar: boolean;
 }
 
-export interface IAccion {
+export interface Accion {
     tipo: string;
     data: any;
 }
 
-export function hacerLogin(token: string): IAccion {
+export const hacerLogin = (tokenVerificar: string): Accion => {
     return {
         data: {
-            token,
+            tokenVerificar,
         },
         tipo: HACERLOGIN,
     };
-}
+};
 
-const reducer: React.Reducer<IGlobal, IAccion> = (estado: IGlobal, accion: IAccion) => {
+export const mostrarSidebar = (mostrar: boolean): Accion => {
+    return {
+        data: {
+            mostrar
+        },
+        tipo: MOSTRARSIDEBAR
+    };
+};
+
+const reducer: React.Reducer<Global, Accion> = (estado: Global, accion: Accion) => {
     const clon = Object.assign({}, estado);
     switch (accion.tipo) {
         case HACERLOGIN: {
@@ -30,19 +41,23 @@ const reducer: React.Reducer<IGlobal, IAccion> = (estado: IGlobal, accion: IAcci
 
             return clon;
         }
+        case MOSTRARSIDEBAR: {
+            clon.mostrarSidebar = accion.data.mostrar;
+
+            return clon;
+        }
         default:
             return estado;
     }
 };
 
-const valorInicial: IGlobal = {
-    token: (localStorage.getItem("token") === null) ? "" : localStorage.getItem("token"),
+const token = localStorage.getItem("token");
+
+const valorInicial: Global = {
+    token: (token === null) ? "" : token,
+    mostrarSidebar: true
 };
 
-export const Store = React.createContext<[IGlobal, Dispatch<IAccion>]>({} as [IGlobal, Dispatch<IAccion>]);
+export const Store = React.createContext<[Global, Dispatch<Accion>]>({} as [Global, Dispatch<Accion>]);
 
-export function StoreProvider(props: any) {
-    return <Store.Provider value={useReducer(reducer, valorInicial)}>
-        {props.children}
-    </Store.Provider>;
-}
+export const StoreProvider = (props: any) => <Store.Provider value={useReducer(reducer, valorInicial)}>{props.children}</Store.Provider>;
